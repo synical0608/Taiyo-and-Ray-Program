@@ -1,0 +1,71 @@
+import os, time
+
+ROMAN_MAP = [(1000, "M"), (900, "CM"), (500, "D"), (400, "CD"), (100, "C"), (90, "XC"), (50, "L"), (40, "XL"), (10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I")]
+store_roman = []
+def num_to_roman(x):
+    x1 = x
+    #Converts an integer less than 4,000,000 to Roman Numerals
+    #Since Roman numerals only go up to 3999, a vinculum is used to represent factoring 1000
+    if x >= 4000 and x < 4000000:
+        store = str(x)
+        length = len(store)-3
+        convert_int = int(length)
+        x0 = int(store[:convert_int])
+        x-= x0 * 1000
+        for v, s in ROMAN_MAP:
+            while x0 >= v:
+                store_roman.append("".join(e + "\u0305" for e in s))
+                x0-= v
+
+    for value, symbol in ROMAN_MAP:
+        while x >= value:
+            store_roman.append(symbol)
+            x -= value
+
+    complete_roman = "".join(store_roman)
+    return f"{x1:,} = \033[4m{complete_roman}"
+
+# print(num_to_roman(1999))
+
+
+
+
+#ERROR
+def roman_to_number(y):
+    total = 0
+    y1 = y
+
+    for val, sym in ROMAN_MAP:
+        while y.startswith(sym) or y.startswith("".join(d + "\u0305" for d in sym)):
+            print("".join(d+"\u0305" for d in sym))
+            if y.startswith("".join(d + "\u0305" for d in sym)):
+                total += val * 1000
+                y = y[len("".join(d + "\u0305" for d in sym)):]
+                print(y)
+            else:
+                total += val
+                y = y[len(sym):]
+
+    return f"{y1} = \033[4m{total:,}"
+
+print(roman_to_number("V\u0305I\u0305IV"))
+
+
+def choose_catgegory():
+    try:
+        type = input("Do you want to convert from an integer to roman numerals (X) or from roman numerals to an integer (Y)?: ")
+    except:
+        print("Enter either (X) or (Y)")
+        
+    if type.lower() == "x":
+        x = input
+
+
+
+
+
+
+
+
+
+
